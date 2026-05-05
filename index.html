@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday!</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", system-ui, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6e6, #ff6fb5, #ff914d);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 850px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 35px 45px;
+      border-radius: 30px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      animation: popIn 1.2s ease;
+      overflow: hidden;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .title {
+      font-size: 3.1rem;
+      color: #ff4f9a;
+      text-shadow: 0 0 15px rgba(255, 79, 154, 0.7);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .custom-bday {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #ff7a2f;
+      margin-bottom: 16px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff7a2f; }
+      to { text-shadow: 0 0 25px #ffb347; }
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #ff4f9a;
+      margin-bottom: 22px;
+      font-weight: 600;
+    }
+
+    /* Balloons */
+    .balloons {
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .balloon {
+      width: 70px;
+      height: 90px;
+      border-radius: 50% 50% 45% 45%;
+      position: relative;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      width: 3px;
+      height: 40px;
+      background: #ff7a2f;
+      transform: translateX(-50%);
+    }
+
+    .balloon-pink {
+      background: radial-gradient(circle at 30% 20%, #ffe6f5, #ff4f9a);
+    }
+
+    .balloon-orange {
+      background: radial-gradient(circle at 30% 20%, #ffd9b3, #ff7a2f);
+    }
+
+    .balloon-yellow {
+      background: radial-gradient(circle at 30% 20%, #fff7c2, #ffc94d);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Confetti background */
+    .confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 18px;
+      background: #ff4f9a;
+      animation: fall 4s linear infinite;
+      opacity: 0.9;
+    }
+
+    .confetti-orange { background: #ff7a2f; }
+    .confetti-yellow { background: #ffd54f; }
+
+    @keyframes fall {
+      0% { transform: translateY(-100vh) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    /* Cheetos-inspired crunchy shapes */
+    .cheeto {
+      position: absolute;
+      width: 80px;
+      height: 35px;
+      background: linear-gradient(135deg, #ffb347, #ff7a2f);
+      border-radius: 40px;
+      box-shadow: 0 0 15px rgba(255, 122, 47, 0.7);
+      transform: rotate(-20deg);
+      animation: wiggle 3s infinite ease-in-out;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-20deg); }
+      50% { transform: rotate(-8deg); }
+    }
+
+    .c1 { top: -20px; left: 8%; }
+    .c2 { top: 5px; right: 5%; }
+    .c3 { bottom: -15px; left: 18%; }
+    .c4 { bottom: -25px; right: 14%; }
+
+    /* Floating Cheetos dust */
+    .dust {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe0b3, #ff7a2f);
+      opacity: 0.8;
+      animation: floatDust 6s infinite ease-in-out;
+    }
+
+    @keyframes floatDust {
+      0% { transform: translateY(0) translateX(0); opacity: 0.3; }
+      50% { transform: translateY(-25px) translateX(15px); opacity: 0.9; }
+      100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+    }
+
+    /* Sparkling hearts */
+    .hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 1.6rem;
+      animation: floatHeart 4.5s infinite ease-in-out;
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(10px) scale(0.9); opacity: 0; }
+      30% { opacity: 1; }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { transform: translateY(-45px) scale(0.9); opacity: 0; }
+    }
+
+    /* Flame emojis around text */
+    .flame-row {
+      margin-top: 8px;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+    }
+
+    .flame {
+      display: inline-block;
+      animation: flamePulse 1.4s infinite ease-in-out;
+    }
+
+    @keyframes flamePulse {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.2); }
+    }
+
+    /* Animated computer emojis */
+    .computers {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+
+    .computer-emoji {
+      display: inline-block;
+      margin: 0 4px;
+      animation: bounceComp 2s infinite ease-in-out;
+    }
+
+    @keyframes bounceComp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Button */
+    .button {
+      padding: 12px 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff4f9a, #ff7a2f);
+      color: white;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      margin-top: 18px;
+      font-size: 1rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+    }
+
+    .music-note {
+      margin-left: 6px;
+    }
+
+    /* Small helper text */
+    .hint {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #ff4f9a;
+      opacity: 0.8;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Background confetti -->
+  <div class="confetti" id="confetti"></div>
+
+  <div class="card">
+
+    <!-- Cheetos-inspired shapes -->
+    <div class="cheeto c1"></div>
+    <div class="cheeto c2"></div>
+    <div class="cheeto c3"></div>
+    <div class="cheeto c4"></div>
+
+    <!-- Floating Cheetos dust -->
+    <div class="dust" style="top: 15%; left: 12%; animation-delay: 0s;"></div>
+    <div class="dust" style="top: 25%; left: 80%; animation-delay: 0.8s;"></div>
+    <div class="dust" style="top: 70%; left: 18%; animation-delay: 1.4s;"></div>
+    <div class="dust" style="top: 60%; left: 70%; animation-delay: 2s;"></div>
+    <div class="dust" style="top: 40%; left: 45%; animation-delay: 2.6s;"></div>
+
+    <!-- Sparkling hearts layer -->
+    <div class="hearts">
+      <div class="heart" style="top: 10%; left: 15%; animation-delay: 0s;">💗</div>
+      <div class="heart" style="top: 18%; left: 75%; animation-delay: 0.7s;">💗</div>
+      <div class="heart" style="top: 65%; left: 10%; animation-delay: 1.4s;">💗</div>
+      <div class="heart" style="top: 70%; left: 80%; animation-delay: 2.1s;">💗</div>
+    </div>
+
+    <h1 class="title">🎉 Happy Birthday! 🎉</h1>
+    <h2 class="custom-bday">Happy 20th Birthday Lojainaaa!! 💖🧡</h2>
+
+    <div class="flame-row">
+      <span class="flame">🔥</span>
+      <span class="flame" style="animation-delay: 0.2s;">🔥</span>
+      <span class="flame" style="animation-delay: 0.4s;">🔥</span>
+      <span class="flame" style="animation-delay: 0.6s;">🔥</span>
+    </div>
+
+    <p class="subtitle">
+      Pink universe, Cheetos crunch, computer vibes, and endless confetti just for you, Lojainaaa. 💗✨
+    </p>
+
+    <!-- Animated computer emojis -->
+    <div class="computers">
+      <span class="computer-emoji" style="animation-delay: 0s;">💻</span>
+      <span class="computer-emoji" style="animation-delay: 0.2s;">🖥️</span>
+      <span class="computer-emoji" style="animation-delay: 0.4s;">⌨️</span>
+      <span class="computer-emoji" style="animation-delay: 0.6s;">🖱️</span>
+      <span class="computer-emoji" style="animation-delay: 0.8s;">💻</span>
+    </div>
+
+    <!-- Balloons -->
+    <div class="balloons">
+      <div class="balloon balloon-pink" style="animation-delay: 0s;"></div>
+      <div class="balloon balloon-orange" style="animation-delay: 0.4s;"></div>
+      <div class="balloon balloon-yellow" style="animation-delay: 0.8s;"></div>
+      <div class="balloon balloon-pink" style="animation-delay: 1.2s;"></div>
+      <div class="balloon balloon-orange" style="animation-delay: 1.6s;"></div>
+    </div>
+
+    <button class="button" onclick="burstConfetti()">
+      Celebrate Again 🎉<span class="music-note">🎶</span>
+    </button>
+
+    <div class="hint">
+      Tip: Turn your volume up for birthday music 🎵
+    </div>
+
+    <!-- Birthday music -->
+    <audio id="birthdayMusic" loop>
+      <!-- You can replace this with any direct MP3 URL you like -->
+      <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Its_time_for_adventure/Komiku_-_12_-_Its_time_for_adventure.mp3" type="audio/mpeg">
+    </audio>
+
+  </div>
+
+  <script>
+    function createConfetti() {
+      const confettiContainer = document.getElementById("confetti");
+      confettiContainer.innerHTML = "";
+
+      const colors = ["pink", "orange", "yellow"];
+      const pieces = 140;
+
+      for (let i = 0; i < pieces; i++) {
+        const piece = document.createElement("div");
+        piece.classList.add("confetti-piece");
+
+        const colorClass = colors[Math.floor(Math.random() * colors.length)];
+        if (colorClass === "orange") piece.classList.add("confetti-orange");
+        if (colorClass === "yellow") piece.classList.add("confetti-yellow");
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.animationDelay = Math.random() * 4 + "s";
+        piece.style.opacity = 0.6 + Math.random() * 0.4;
+
+        confettiContainer.appendChild(piece);
+      }
+    }
+
+    function burstConfetti() {
+      createConfetti();
+      const music = document.getElementById("birthdayMusic");
+      if (music.paused) {
+        music.play().catch(() => {
+          // ignore autoplay errors
+        });
+      }
+    }
+
+    // Initial confetti + try to start music on first load (may be blocked until click)
+    createConfetti();
+  </script>
+
+</body>
+</html>
